@@ -8,9 +8,11 @@ namespace Monogame_Topic_2___Scaling_and_Text_Challenge
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        int colorType;
 
         Rectangle window;
 
+        Texture2D rectangleTexture;
         Rectangle boardTileRect;
 
         public Game1()
@@ -38,6 +40,8 @@ namespace Monogame_Topic_2___Scaling_and_Text_Challenge
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+
+            rectangleTexture = Content.Load<Texture2D>("rectangle");
         }
 
         protected override void Update(GameTime gameTime)
@@ -54,7 +58,34 @@ namespace Monogame_Topic_2___Scaling_and_Text_Challenge
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            boardTileRect.X = 0;
+            boardTileRect.Y = 0;
+            colorType = 0;
+
             // TODO: Add your drawing code here
+            _spriteBatch.Begin();
+
+            for (int i = 0; i <= 8; i++)
+            {
+                for (int x = 0; x <= 8; x++)
+                {
+                    if (colorType == 0)
+                    {
+                        _spriteBatch.Draw(rectangleTexture, boardTileRect, Color.Tan);
+                        colorType = 1;
+                    }
+                    else if (colorType == 1)
+                    {
+                        _spriteBatch.Draw(rectangleTexture, boardTileRect, Color.SaddleBrown);
+                        colorType = 0;
+                    }
+                    boardTileRect.X += 80;
+                }
+                boardTileRect.X = 0;
+                boardTileRect.Y += 80;
+            }
+
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }
